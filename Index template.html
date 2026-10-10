@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="welcome">
+    <h1>Student Academic Management System</h1>
+    <p>Manage students, courses, attendance, and examination marks in one place.</p>
+</section>
+
+<section class="dashboard">
+
+    <div class="card">
+        <h3>Total Students</h3>
+        <h2>{{ student_count }}</h2>
+        <a href="/students">View Students</a>
+    </div>
+
+    <div class="card">
+        <h3>Total Courses</h3>
+        <h2>{{ course_count }}</h2>
+        <a href="/courses">View Courses</a>
+    </div>
+
+    <div class="card">
+        <h3>Attendance Records</h3>
+        <h2>{{ attendance_count }}</h2>
+        <a href="/attendance">View Attendance</a>
+    </div>
+
+    <div class="card">
+        <h3>Marks Records</h3>
+        <h2>{{ marks_count }}</h2>
+        <a href="/marks">View Marks</a>
+    </div>
+
+</section>
+
+<section class="panel">
+    <h2>Recent Attendance</h2>
+
+    {% if recent %}
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Register Number</th>
+                    <th>Student Name</th>
+                    <th>Course</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for record in recent %}
+                <tr>
+                    <td>{{ record['attendance_date'] }}</td>
+                    <td>{{ record['register_no'] }}</td>
+                    <td>{{ record['student_name'] }}</td>
+                    <td>{{ record['course_name'] }}</td>
+                    <td>{{ record['status'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <p>No attendance records available yet.</p>
+    {% endif %}
+</section>
+
+{% endblock %}
