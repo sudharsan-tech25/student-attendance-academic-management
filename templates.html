@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Academic Management System</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <header>
+        <h2>🎓 Student Academic Manager</h2>
+
+        <nav>
+            <a href="/">Dashboard</a>
+            <a href="/students">Students</a>
+            <a href="/courses">Courses</a>
+            <a href="/attendance">Attendance</a>
+            <a href="/marks">Marks</a>
+            <a href="/reports">Reports</a>
+        </nav>
+    </header>
+
+    <main>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <p class="{{ category }}">{{ message }}</p>
+            {% endfor %}
+        {% endwith %}
+
+        {% block content %}
+        {% endblock %}
+
+    </main>
+
+    <footer>
+        <p>DBMS Mini Project | Student Academic Management System</p>
+        <p>Designed for student academic record management</p>
+    </footer>
+
+</body>
+</html>
