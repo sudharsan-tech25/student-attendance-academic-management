@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Attendance{% endblock %}
+{% block content %}
+<div class="page-title"><div><p class="eyebrow">RECORD KEEPING</p><h1>Attendance</h1><p>Record daily attendance by student and course.</p></div></div>
+<section class="panel"><h2>Record attendance</h2>
+{% if students and courses %}
+<form method="post" class="form-grid">
+<label>Student<select name="student_id" required>{% for s in students %}<option value="{{ s.student_id }}">{{ s.register_no }} — {{ s.student_name }}</option>{% endfor %}</select></label>
+<label>Course<select name="course_id" required>{% for c in courses %}<option value="{{ c.course_id }}">{{ c.course_code }} — {{ c.course_name }}</option>{% endfor %}</select></label>
+<label>Date<input name="attendance_date" type="date" required></label>
+<label>Status<select name="status"><option>Present</option><option>Absent</option></select></label>
+<div class="form-submit"><button type="submit">Save attendance</button></div>
+</form>
+{% else %}<p class="empty">Add at least one student and one course before recording attendance.</p>{% endif %}
+</section>
+<section class="panel"><div class="panel-head"><h2>Attendance records</h2><span>{{ records|length }} records</span></div>
+<div class="table-wrap"><table><thead><tr><th>Date</th><th>Register No.</th><th>Student</th><th>Course</th><th>Status</th></tr></thead><tbody>
+{% for r in records %}<tr><td>{{ r.attendance_date }}</td><td>{{ r.register_no }}</td><td>{{ r.student_name }}</td><td>{{ r.course_name }}</td><td><span class="badge {{ r.status|lower }}">{{ r.status }}</span></td></tr>{% else %}<tr><td colspan="5" class="empty">No attendance records yet.</td></tr>{% endfor %}
+</tbody></table></div></section>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Reports{% endblock %}
+{% block content %}
+<div class="page-title"><div><p class="eyebrow">ANALYTICS</p><h1>Reports</h1><p>Review attendance percentages and academic performance.</p></div></div>
+<section class="panel"><div class="panel-head"><h2>Attendance summary</h2><span>Present sessions / total sessions</span></div>
+<div class="table-wrap"><table><thead><tr><th>Register No.</th><th>Student</th><th>Course</th><th>Present</th><th>Total</th><th>Attendance %</th></tr></thead><tbody>
+{% for r in attendance_report %}<tr><td>{{ r.register_no }}</td><td>{{ r.student_name }}</td><td>{{ r.course_name }}</td><td>{{ r.present_count }}</td><td>{{ r.total_count }}</td><td><div class="percent"><span>{{ r.percentage }}%</span><div class="bar"><i style="width: {{ r.percentage }}%"></i></div></div></td></tr>{% endfor %}
+</tbody></table></div></section>
+<section class="panel"><div class="panel-head"><h2>Academic performance</h2><span>{{ marks_report|length }} entries</span></div>
+<div class="table-wrap"><table><thead><tr><th>Register No.</th><th>Student</th><th>Course</th><th>Assessment</th><th>Marks</th><th>Percentage</th></tr></thead><tbody>
+{% for r in marks_report %}<tr><td>{{ r.register_no }}</td><td>{{ r.student_name }}</td><td>{{ r.course_name }}</td><td>{{ r.assessment_name }}</td><td>{{ r.marks_obtained:g }} / {{ r.max_marks:g }}</td><td>{{ r.percentage }}%</td></tr>{% else %}<tr><td colspan="6" class="empty">No marks entered yet.</td></tr>{% endfor %}
+</tbody></table></div></section>
+{% endblock %}

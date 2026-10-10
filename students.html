@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Students{% endblock %}
+{% block content %}
+<div class="page-title"><div><p class="eyebrow">MANAGEMENT</p><h1>Students</h1><p>Add and view student records.</p></div></div>
+<section class="panel"><h2>Add a student</h2>
+<form method="post" class="form-grid">
+<label>Register number<input name="register_no" required placeholder="e.g. A004"></label>
+<label>Student name<input name="student_name" required placeholder="Full name"></label>
+<label>Department<input name="department" required placeholder="e.g. AI&DS"></label>
+<label>Study year<input name="study_year" type="number" min="1" max="6" required value="2"></label>
+<div class="form-submit"><button type="submit">Add student</button></div>
+</form></section>
+<section class="panel"><div class="panel-head"><h2>Student list</h2><span>{{ students|length }} records</span></div>
+<div class="table-wrap"><table><thead><tr><th>ID</th><th>Register No.</th><th>Name</th><th>Department</th><th>Year</th><th>Action</th></tr></thead><tbody>
+{% for s in students %}<tr><td>{{ s.student_id }}</td><td>{{ s.register_no }}</td><td>{{ s.student_name }}</td><td>{{ s.department }}</td><td>{{ s.study_year }}</td><td><form method="post" action="{{ url_for('delete_student', student_id=s.student_id) }}" onsubmit="return confirm('Delete this student and related records?')"><button class="danger small" type="submit">Delete</button></form></td></tr>{% else %}<tr><td colspan="6" class="empty">No students yet.</td></tr>{% endfor %}
+</tbody></table></div></section>
+{% endblock %}

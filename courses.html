@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Courses{% endblock %}
+{% block content %}
+<div class="page-title"><div><p class="eyebrow">MANAGEMENT</p><h1>Courses</h1><p>Maintain course codes and course details.</p></div></div>
+<section class="panel"><h2>Add a course</h2>
+<form method="post" class="form-grid">
+<label>Course code<input name="course_code" required placeholder="e.g. 23DBMS"></label>
+<label>Course name<input name="course_name" required placeholder="Course name"></label>
+<label>Semester<input name="semester" type="number" min="1" max="12" required value="3"></label>
+<div class="form-submit"><button type="submit">Add course</button></div>
+</form></section>
+<section class="panel"><div class="panel-head"><h2>Course list</h2><span>{{ courses|length }} records</span></div>
+<div class="table-wrap"><table><thead><tr><th>ID</th><th>Code</th><th>Course name</th><th>Semester</th><th>Action</th></tr></thead><tbody>
+{% for c in courses %}<tr><td>{{ c.course_id }}</td><td>{{ c.course_code }}</td><td>{{ c.course_name }}</td><td>{{ c.semester }}</td><td><form method="post" action="{{ url_for('delete_course', course_id=c.course_id) }}" onsubmit="return confirm('Delete this course and related records?')"><button class="danger small" type="submit">Delete</button></form></td></tr>{% else %}<tr><td colspan="5" class="empty">No courses yet.</td></tr>{% endfor %}
+</tbody></table></div></section>
+{% endblock %}

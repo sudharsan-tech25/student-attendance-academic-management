@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Marks{% endblock %}
+{% block content %}
+<div class="page-title"><div><p class="eyebrow">ACADEMIC RECORDS</p><h1>Marks</h1><p>Save assessment marks and view percentages.</p></div></div>
+<section class="panel"><h2>Enter marks</h2>
+{% if students and courses %}
+<form method="post" class="form-grid">
+<label>Student<select name="student_id" required>{% for s in students %}<option value="{{ s.student_id }}">{{ s.register_no }} — {{ s.student_name }}</option>{% endfor %}</select></label>
+<label>Course<select name="course_id" required>{% for c in courses %}<option value="{{ c.course_id }}">{{ c.course_code }} — {{ c.course_name }}</option>{% endfor %}</select></label>
+<label>Assessment name<input name="assessment_name" required placeholder="e.g. Internal 1"></label>
+<label>Marks obtained<input name="marks_obtained" type="number" min="0" step="0.01" required></label>
+<label>Maximum marks<input name="max_marks" type="number" min="0.01" step="0.01" value="50" required></label>
+<div class="form-submit"><button type="submit">Save marks</button></div>
+</form>
+{% else %}<p class="empty">Add at least one student and one course before entering marks.</p>{% endif %}
+</section>
+<section class="panel"><div class="panel-head"><h2>Marks list</h2><span>{{ records|length }} records</span></div>
+<div class="table-wrap"><table><thead><tr><th>Register No.</th><th>Student</th><th>Course</th><th>Assessment</th><th>Marks</th><th>Percentage</th></tr></thead><tbody>
+{% for r in records %}<tr><td>{{ r.register_no }}</td><td>{{ r.student_name }}</td><td>{{ r.course_name }}</td><td>{{ r.assessment_name }}</td><td>{{ r.marks_obtained:g }} / {{ r.max_marks:g }}</td><td>{{ r.percentage }}%</td></tr>{% else %}<tr><td colspan="6" class="empty">No marks have been entered yet.</td></tr>{% endfor %}
+</tbody></table></div></section>
+{% endblock %}

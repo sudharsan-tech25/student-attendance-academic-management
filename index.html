@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Dashboard | Student Academic Manager{% endblock %}
+{% block content %}
+<section class="hero">
+  <div><p class="eyebrow">DBMS MINI PROJECT</p><h1>Student Attendance &amp;<br>Academic Record Management</h1>
+  <p>Manage student details, courses, attendance and marks in one place.</p></div>
+  <div class="hero-icon">📚</div>
+</section>
+<div class="stats">
+  <div class="stat"><span>Students</span><strong>{{ student_count }}</strong></div>
+  <div class="stat"><span>Courses</span><strong>{{ course_count }}</strong></div>
+  <div class="stat"><span>Attendance records</span><strong>{{ attendance_count }}</strong></div>
+  <div class="stat"><span>Mark entries</span><strong>{{ marks_count }}</strong></div>
+</div>
+<section class="panel"><div class="panel-head"><h2>Quick actions</h2></div>
+<div class="actions">
+  <a class="action" href="{{ url_for('students') }}">＋ Add student</a>
+  <a class="action" href="{{ url_for('courses') }}">＋ Add course</a>
+  <a class="action" href="{{ url_for('attendance') }}">✓ Record attendance</a>
+  <a class="action" href="{{ url_for('marks') }}">✎ Enter marks</a>
+  <a class="action" href="{{ url_for('reports') }}">▤ View reports</a>
+</div></section>
+<section class="panel"><div class="panel-head"><h2>Recent attendance</h2><a href="{{ url_for('attendance') }}">View all →</a></div>
+{% if recent %}
+<div class="table-wrap"><table><thead><tr><th>Date</th><th>Register No.</th><th>Student</th><th>Course</th><th>Status</th></tr></thead><tbody>
+{% for row in recent %}<tr><td>{{ row.attendance_date }}</td><td>{{ row.register_no }}</td><td>{{ row.student_name }}</td><td>{{ row.course_name }}</td><td><span class="badge {{ row.status|lower }}">{{ row.status }}</span></td></tr>{% endfor %}
+</tbody></table></div>
+{% else %}<p class="empty">No attendance has been recorded yet.</p>{% endif %}
+</section>
+{% endblock %}
