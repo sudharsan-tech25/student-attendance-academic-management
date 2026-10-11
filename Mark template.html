@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="panel">
+    <h1>Examination Marks Management</h1>
+    <p>Record and manage student examination marks.</p>
+
+    <form method="POST" action="/marks" class="form-grid">
+
+        <label>Student</label>
+        <select name="student_id" required>
+            <option value="">Select Student</option>
+            {% for student in students %}
+            <option value="{{ student['student_id'] }}">
+                {{ student['register_no'] }} - {{ student['student_name'] }}
+            </option>
+            {% endfor %}
+        </select>
+
+        <label>Course</label>
+        <select name="course_id" required>
+            <option value="">Select Course</option>
+            {% for course in courses %}
+            <option value="{{ course['course_id'] }}">
+                {{ course['course_code'] }} - {{ course['course_name'] }}
+            </option>
+            {% endfor %}
+        </select>
+
+        <label>Exam Type</label>
+        <select name="exam_type" required>
+            <option value="">Select Exam</option>
+            <option value="Internal 1">Internal 1</option>
+            <option value="Internal 2">Internal 2</option>
+            <option value="Model Exam">Model Exam</option>
+            <option value="Semester Exam">Semester Exam</option>
+        </select>
+
+        <label>Marks Obtained</label>
+        <input type="number" name="marks_obtained"
+               min="0" max="100" placeholder="Enter marks" required>
+
+        <label>Total Marks</label>
+        <input type="number" name="total_marks"
+               min="1" max="100" value="100" required>
+
+        <button type="submit">Save Marks</button>
+
+    </form>
+</section>
+
+<section class="panel">
+    <h2>Examination Records</h2>
+
+    {% if marks %}
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Register Number</th>
+                    <th>Student Name</th>
+                    <th>Course</th>
+                    <th>Exam Type</th>
+                    <th>Marks</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for record in marks %}
+                <tr>
+                    <td>{{ record['register_no'] }}</td>
+                    <td>{{ record['student_name'] }}</td>
+                    <td>{{ record['course_name'] }}</td>
+                    <td>{{ record['exam_type'] }}</td>
+                    <td>{{ record['marks_obtained'] }}</td>
+                    <td>{{ record['total_marks'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <p>No examination marks recorded yet.</p>
+    {% endif %}
+
+</section>
+
+{% endblock %}
