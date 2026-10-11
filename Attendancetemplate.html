@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="panel">
+    <h1>Student Attendance Management</h1>
+    <p>Record and manage student attendance.</p>
+
+    <form method="POST" action="/attendance" class="form-grid">
+
+        <label>Student</label>
+        <select name="student_id" required>
+            <option value="">Select Student</option>
+            {% for student in students %}
+            <option value="{{ student['student_id'] }}">
+                {{ student['register_no'] }} - {{ student['student_name'] }}
+            </option>
+            {% endfor %}
+        </select>
+
+        <label>Course</label>
+        <select name="course_id" required>
+            <option value="">Select Course</option>
+            {% for course in courses %}
+            <option value="{{ course['course_id'] }}">
+                {{ course['course_code'] }} - {{ course['course_name'] }}
+            </option>
+            {% endfor %}
+        </select>
+
+        <label>Attendance Date</label>
+        <input type="date" name="attendance_date" required>
+
+        <label>Attendance Status</label>
+        <select name="status" required>
+            <option value="Present">Present</option>
+            <option value="Absent">Absent</option>
+            <option value="Late">Late</option>
+        </select>
+
+        <button type="submit">Save Attendance</button>
+
+    </form>
+</section>
+
+<section class="panel">
+    <h2>Attendance Records</h2>
+
+    {% if attendance %}
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Register Number</th>
+                    <th>Student Name</th>
+                    <th>Course</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for record in attendance %}
+                <tr>
+                    <td>{{ record['attendance_date'] }}</td>
+                    <td>{{ record['register_no'] }}</td>
+                    <td>{{ record['student_name'] }}</td>
+                    <td>{{ record['course_name'] }}</td>
+                    <td>{{ record['status'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <p>No attendance records available.</p>
+    {% endif %}
+
+</section>
+
+{% endblock %}
