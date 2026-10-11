@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="welcome">
+    <h1>Academic Reports</h1>
+    <p>View student academic performance and attendance records.</p>
+</section>
+
+<section class="dashboard">
+
+    <div class="card">
+        <h3>Total Students</h3>
+        <h2>{{ student_count }}</h2>
+    </div>
+
+    <div class="card">
+        <h3>Total Courses</h3>
+        <h2>{{ course_count }}</h2>
+    </div>
+
+    <div class="card">
+        <h3>Attendance Records</h3>
+        <h2>{{ attendance_count }}</h2>
+    </div>
+
+    <div class="card">
+        <h3>Marks Records</h3>
+        <h2>{{ marks_count }}</h2>
+    </div>
+
+</section>
+
+<section class="panel">
+    <h2>Student Performance Report</h2>
+
+    {% if marks %}
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Register Number</th>
+                    <th>Student Name</th>
+                    <th>Course</th>
+                    <th>Exam Type</th>
+                    <th>Marks Obtained</th>
+                    <th>Total Marks</th>
+                    <th>Percentage</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for record in marks %}
+                <tr>
+                    <td>{{ record['register_no'] }}</td>
+                    <td>{{ record['student_name'] }}</td>
+                    <td>{{ record['course_name'] }}</td>
+                    <td>{{ record['exam_type'] }}</td>
+                    <td>{{ record['marks_obtained'] }}</td>
+                    <td>{{ record['total_marks'] }}</td>
+                    <td>
+                        {% if record['total_marks']|float > 0 %}
+                            {{ "%.2f"|format((record['marks_obtained']|float / record['total_marks']|float) * 100) }}%
+                        {% else %}
+                            N/A
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% else %}
+    <p>No examination records are available yet.</p>
+    {% endif %}
+
+</section>
+
+<section class="panel">
+    <h2>Attendance Summary</h2>
+    <p>Use the Attendance page to add and review student attendance.</p>
+    <a href="/attendance" class="button">View Attendance</a>
+</section>
+
+{% endblock %}
